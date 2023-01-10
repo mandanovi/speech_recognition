@@ -7,13 +7,16 @@ import tkinter.messagebox
 from tkinter import font as tkFont
 from datetime import datetime
 from tkinter import filedialog as fd
+from gtts import gTTS
+import os
+import playsound
 
 
 class SpeechRecognition(Tk):
     def __init__(self):
         super().__init__()
         self.title("Speech Recognition")
-        self.geometry("920x600")
+        self.geometry("920x650")
         self.configure(bg="#A75D5D")
         self.r = speech_recognition.Recognizer()
         self.widget()
@@ -128,9 +131,12 @@ class SpeechRecognition(Tk):
         label_translate = Label(text=f"RESULT : ", font=self.helv12, anchor=CENTER,
                                 background='#A75D5D', foreground='white')
         label_translate.grid(column=1, row=16, rowspan=3)
-        translate_result = Text(height=7, width=40)
-        translate_result.grid(column=1, row=17)
-        translate_result.insert(END, self.text_translate(to_lang=self.to_lang.get(), from_lang=self.from_lang.get(), text_to_translate=self.result))
+        self.translate_result = Text(height=7, width=40)
+        self.translate_result.grid(column=1, row=17)
+        self.translate_result.insert(END, self.text_translate(to_lang=self.to_lang.get(), from_lang=self.from_lang.get(), text_to_translate=self.result))
+        self.speak_button = Button(text="Speak", width=10, command=self.speak_parser)
+        self.speak_button.grid(column=1, row=18)
+
 
     def select_file(self):
         filetypes = (
@@ -148,6 +154,16 @@ class SpeechRecognition(Tk):
         selected_file.grid(column=1, row=7, rowspan=3)
         self.end_result(self.audio_from_wav_file(filename))
 
+    def speak(self, text, lang):
+        tts = gTTS(text=text, lang=lang)
+
+        filename = "speak.mp3"
+        tts.save(filename)
+        playsound.playsound(filename)
+        os.remove(filename)
+
+    def speak_parser(self):
+        self.speak(self.translate_result.get(1.0, END), self.to_lang.get())
 
 
 
