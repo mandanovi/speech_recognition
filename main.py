@@ -29,8 +29,6 @@ class SpeechRecognition(Tk):
         from_label.grid(column=1, row=4, pady=15)
 
         choices = ['en-US', 'id', 'de']
-        variable = StringVar(self)
-        variable.set('English')
         self.from_lang = Combobox(self, values=choices, font=self.helv12)
         self.from_lang.grid(column=1, row=4)
 
@@ -54,8 +52,6 @@ class SpeechRecognition(Tk):
         to_label.grid(column=1, row=15, pady=20, padx=20)
 
         choices = ['en-US', 'id', 'de']
-        variable = StringVar(self)
-        variable.set('English')
         self.to_lang = Combobox(self, values=choices, font=self.helv12)
         self.to_lang.grid(column=1, row=15, pady=20, padx=20)
 
@@ -123,8 +119,8 @@ class SpeechRecognition(Tk):
             except LookupError:
                 tkinter.messagebox.showerror("Error", "Could not understand audio")
 
-    def text_translate(self, to_lang, text_to_translate):
-        translator = Translator(to_lang=to_lang)
+    def text_translate(self, to_lang, from_lang, text_to_translate):
+        translator = Translator(to_lang=to_lang, from_lang=from_lang)
         self.translation = translator.translate(text_to_translate)
         return self.translation
 
@@ -134,7 +130,7 @@ class SpeechRecognition(Tk):
         label_translate.grid(column=1, row=16, rowspan=3)
         translate_result = Text(height=7, width=40)
         translate_result.grid(column=1, row=17)
-        translate_result.insert(END, self.text_translate(self.to_lang.get(), self.result))
+        translate_result.insert(END, self.text_translate(to_lang=self.to_lang.get(), from_lang=self.from_lang.get(), text_to_translate=self.result))
 
     def select_file(self):
         filetypes = (
