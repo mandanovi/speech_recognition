@@ -49,7 +49,7 @@ class SpeechRecognition(Tk):
     def end_result(self, result):
         self.text_speech = Text(height=7, width=40)
         self.text_speech.grid(column=1, row=11)
-        self.speech_result = self.text_speech.insert(END, f"DETECTED VOICE: {result}")
+        self.speech_result = self.text_speech.insert(END, f"{result}")
 
         to_label = Label(width=45, text="Translate to: ", font=self.helv12, background='#A75D5D', foreground="white")
         to_label.grid(column=1, row=15, pady=20, padx=20)
