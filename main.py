@@ -134,8 +134,8 @@ class SpeechRecognition(Tk):
         self.translate_result = Text(height=7, width=40)
         self.translate_result.grid(column=1, row=17)
         self.translate_result.insert(END, self.text_translate(to_lang=self.to_lang.get(), from_lang=self.from_lang.get(), text_to_translate=self.result))
-        self.speak_button = Button(text="Speak", width=10, command=self.speak_parser)
-        self.speak_button.grid(column=1, row=18)
+        self.speak_button = Button(text="Speak Translated Text", width=20, command=self.speak_parser)
+        self.speak_button.grid(column=1, row=18, pady=10)
 
 
     def select_file(self):
